@@ -1,22 +1,21 @@
 {
-    // 使用 IntelliSense 了解相关属性。 
+    // 使用 IntelliSense 了解相关属性。
     // 悬停以查看现有属性的描述。
     // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        {      
-            "type": "node",
-            "request": "launch",
-            "name": "nodemon",  
-            "runtimeExecutable": "nodemon", 
-            "program": "${workspaceRoot}/node_modules/ts-node/dist/bin.js",  
-            "args": [        
-                "${workspaceFolder}\\src\\main.ts"      
-            ], 
-            "restart": true,     
-            "protocol": "inspector",      
-            "console": "integratedTerminal",    
-            "internalConsoleOptions": "neverOpen",    
-        }
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Debug Server",
+        "runtimeExecutable": "nodemon",
+        "program": "${workspaceRoot}/node_modules/ts-node/dist/bin.js",
+        "args": [
+          "${workspaceRoot}/src/main.ts"
+        ],
+        "restart": true,
+        "console": "integratedTerminal",
+        "internalConsoleOptions": "neverOpen"
+      }
     ]
-},
+  }
