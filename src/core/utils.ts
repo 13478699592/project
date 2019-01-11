@@ -1,5 +1,4 @@
 import { HttpException } from "@nestjs/common";
-import * as fs from "fs";
 import * as _ from "lodash";
 import * as path from "path";
 import { LoggerService } from "./modules/logger";

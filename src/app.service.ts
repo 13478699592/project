@@ -4,17 +4,20 @@ import { Repository } from 'typeorm';
 import { UserEntity } from './entities';
 import { HTTP_STATUS_CODE_ENUM } from './core/shared/enums';
 import { createResult } from './core/utils';
+import { DesEcbService } from './core/services';
 
 @Injectable()
 export class AppService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly repository: Repository<UserEntity>,
+    private desecbService:DesEcbService
   ) {}
 
   async login(users){
+    const password = this.desecbService.decryptedDES(users.password,users.currentTime);
     const usersData = await this.repository.find({
-      where: { username: users.username,password:users.password},
+      where: { username: users.username,password:password},
     });
     if(usersData.length > 0){
       return createResult({status:"success",code:HTTP_STATUS_CODE_ENUM.OK});
