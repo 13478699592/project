@@ -4,6 +4,7 @@ import * as CryptoJS from 'crypto-js';
 const {
     PASSWORD_CONFIG_ENV,
     PASSWORD_CONFIG_IV,
+    PASSWORD_CONFIG_AGAIN
 } = APP_CONFIG;
 
 export const DESECB_CONFIG:any = {
@@ -12,3 +13,7 @@ export const DESECB_CONFIG:any = {
   mode: CryptoJS.mode.CBC,
   padding: CryptoJS.pad.Pkcs7
 };
+
+export const PASSWORD_CONFIG:any ={
+  AGAIN:PASSWORD_CONFIG_AGAIN
+}

@@ -12,4 +12,11 @@ export class DesEcbService {
         var decryptedStr = decrypt.toString(CryptoJS.enc.Utf8);
         return decryptedStr.toString();
     }
+    encryptedDES(password,currentTime) {
+        const key = CryptoJS.enc.Utf8.parse(currentTime.toString()+'000'); //16位
+        let encrypted:any;
+        var enc_password = CryptoJS.enc.Utf8.parse(password);
+        encrypted = CryptoJS.AES.encrypt(enc_password, key, DESECB_CONFIG);
+        return encrypted.ciphertext.toString();
+    }
 }
