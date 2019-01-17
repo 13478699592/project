@@ -10,8 +10,8 @@ export class UserListEntity{
   @Column("nvarchar")
   public name: string;
 
-  @Column("nvarchar")
-  public age: string;
+  @Column("int")
+  public age: number;
 
   @Column("nvarchar")
   public address: string;

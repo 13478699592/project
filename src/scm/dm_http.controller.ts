@@ -9,17 +9,24 @@ export class DmHttpController {
     private readonly dmhttpService: DmHttpService
   ) {}
 
-  @Post("form/userlist")
+  @Post("form/adduser")
   async create(
-    @Body("formdata") formdata: UserListEntity
+    @Body("formdata") formPara: UserListEntity
   ) {
-    return this.dmhttpService.userlist(formdata);
+    return this.dmhttpService.userlist(formPara);
   }
 
   @Post("form/userlist")
   async getUserList(
+    @Body("formdata") formPara: UserListEntity
+  ) {
+    return this.dmhttpService.getUserList(formPara);
+  }
+
+  @Post("form/delete")
+  async deleteUser(
     @Body("formdata") formdata: UserListEntity
   ) {
-    return this.dmhttpService.userlist(formdata);
+    return this.dmhttpService.deleteUser(formdata);
   }
 }

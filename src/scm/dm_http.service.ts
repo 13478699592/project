@@ -34,4 +34,34 @@ export class DmHttpService {
       return createResult({status:"success",code:HTTP_STATUS_CODE_ENUM.OK});
     }
   }
+  
+  async getUserList(param){
+    const skip = (param.currentPage-1)*param.pageSize;
+    const totalPage = await this.repository.count();
+    const allUsers = await this.repository.find({order:{age:'ASC'},skip:skip,take:param.pageSize,});
+    if(allUsers.length==param.pageSize){
+      const beginPage = param.currentPage*param.pageSize-(param.pageSize-1);
+      const endPage = param.currentPage*param.pageSize;
+      return createResult({data:allUsers,totalPage:totalPage,beginPage:beginPage,endPage:endPage,code:HTTP_STATUS_CODE_ENUM.OK});
+    }else if(allUsers.length!=param.pageSize&&allUsers.length>0){
+      const beginPage = param.currentPage*param.pageSize-(param.pageSize-1);
+      const endPage =param.currentPage*param.pageSize-(param.pageSize-allUsers.length);
+      return createResult({data:allUsers,totalPage:totalPage,beginPage:beginPage,endPage:endPage,code:HTTP_STATUS_CODE_ENUM.OK});
+    }else{
+      return createResult({data:[],code:HTTP_STATUS_CODE_ENUM.NO_DATA});
+    }
+  }
+
+  async deleteUser(formdata){
+    const User = await this.repository.find({
+      where:{id:formdata.id}
+    })
+    console.log(User);
+    if(User){
+        await this.repository.delete(formdata.id);
+        return createResult({code:HTTP_STATUS_CODE_ENUM.OK});
+    }else{
+      return;
+    }
+  }
 }
