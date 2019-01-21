@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 import { UserListEntity } from '../entities/system/userList.entity';
 import { DmHttpService } from './dm_http.service';
 import { createWriteStream } from 'fs';
+import { join } from 'path';
 
 @Controller()
 export class DmHttpController {
@@ -39,10 +40,13 @@ export class DmHttpController {
   }
 
   @Post("form/userlist/import")
+  @UseInterceptors(FileInterceptor('file'))
   async userlist_import(
-    @Body("formdata") formdata
+    @UploadedFile() file, @Body() body
   ) {
-    return this.dmhttpService.userlist_import(formdata);
+    const writeImage = createWriteStream(join(__dirname, '..', 'upload', `${body.name}-${Date.now()}-${file.originalname}`))
+    writeImage.write(file.buffer)
+    return this.dmhttpService.userlist_import(writeImage);
   }
 
   // @Post("form/userlist/import")

@@ -82,15 +82,16 @@ export class DmHttpService {
   }
 
   async userlist_import(formdata){
-    let userArr = [];
-    formdata.forEach(element => {
-        const newEntity = new UserListEntity();
-        newEntity.name = element.name;
-        newEntity.age = element.age;
-        newEntity.address = element.address;
-        userArr.push(newEntity);
-    });
-    await this.repository.save(userArr);
-    return createResult({code:HTTP_STATUS_CODE_ENUM.OK});
+    console.log(formdata)
+    // let userArr = [];
+    // formdata.forEach(element => {
+    //     const newEntity = new UserListEntity();
+    //     newEntity.name = element.name;
+    //     newEntity.age = element.age;
+    //     newEntity.address = element.address;
+    //     userArr.push(newEntity);
+    // });
+    // await this.repository.save(userArr);
+    // return createResult({code:HTTP_STATUS_CODE_ENUM.OK});
   }
 }
