@@ -4,6 +4,7 @@ import { UserListEntity } from '../entities/system/userList.entity';
 import { DmHttpService } from './dm_http.service';
 import { createWriteStream } from 'fs';
 import { join } from 'path';
+import { IFile } from '../core/shared/interfaces';
 
 @Controller()
 export class DmHttpController {
@@ -42,16 +43,8 @@ export class DmHttpController {
   @Post("form/userlist/import")
   @UseInterceptors(FileInterceptor('file'))
   async userlist_import(
-    @UploadedFile() file, @Body() body
+    @UploadedFile() file: IFile,
   ) {
-    const writeImage = createWriteStream(join(__dirname, '..', 'upload', `${body.name}-${Date.now()}-${file.originalname}`))
-    writeImage.write(file.buffer)
-    return this.dmhttpService.userlist_import(writeImage);
+    console.log(file);
   }
-
-  // @Post("form/userlist/import")
-  // @UseInterceptors(FileInterceptor("file"))
-  // public uploadFile(@UploadedFile() file, @Body("token") token) {
-  //  console.log(file);
-  // }
 }
