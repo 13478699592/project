@@ -26,11 +26,13 @@
     "crypto-js": "^3.1.9-1",
     "dotenv": "^6.2.0",
     "mssql": "^4.3.0",
+    "mysql": "^2.16.0",
     "reflect-metadata": "^0.1.12",
     "rimraf": "^2.6.2",
     "rxjs": "^6.2.2",
-    "typeorm": "^0.2.11",
-    "typescript": "^3.0.1"
+    "typeorm": "^0.2.12",
+    "typescript": "^3.0.1",
+    "xlsx": "^0.14.1"
   },
   "devDependencies": {
     "@nestjs/testing": "^5.1.0",

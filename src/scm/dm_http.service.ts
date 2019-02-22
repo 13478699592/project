@@ -1,15 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserListEntity } from '../entities';
+import { UserListEntity, FileEntity } from '../entities';
 import { HTTP_STATUS_CODE_ENUM } from '../core/shared/enums';
 import { createResult } from '../core/utils';
+import { IFile } from 'src/core/shared/interfaces';
+import * as xlsx from 'xlsx';
+import * as _ from 'lodash';
 
 @Injectable()
 export class DmHttpService {
   constructor(
     @InjectRepository(UserListEntity)
-    private readonly repository: Repository<UserListEntity>
+    private readonly repository: Repository<UserListEntity>,
+    @InjectRepository(FileEntity)
+    private readonly Filerepository: Repository<FileEntity>,
   ) {}
 
   async userlist(formdata) {
@@ -81,17 +86,34 @@ export class DmHttpService {
     }
   }
 
-  async userlist_import(formdata){
-    console.log(formdata)
-    // let userArr = [];
-    // formdata.forEach(element => {
-    //     const newEntity = new UserListEntity();
-    //     newEntity.name = element.name;
-    //     newEntity.age = element.age;
-    //     newEntity.address = element.address;
-    //     userArr.push(newEntity);
-    // });
-    // await this.repository.save(userArr);
-    // return createResult({code:HTTP_STATUS_CODE_ENUM.OK});
+  async userlist_import(file: IFile){
+    const files = [];
+    console.log(file);
+    const fileName = file.originalname;
+    const workbook: xlsx.WorkBook = xlsx.read(file.buffer);
+    const sheet: xlsx.WorkSheet = workbook.Sheets[workbook.SheetNames[0]];
+    const datas: any[] = xlsx.utils.sheet_to_json(sheet);
+    console.log(datas);
+    _.forEach(datas, (data,index) => {
+      const file: FileEntity = new FileEntity();
+      file.age = data.age;
+      file.name = data.name;
+      file.address = data.address;
+      file.uploadTime = new Date();
+      file.fileName = fileName;
+      files.push(file);
+    });
+    console.log(files);
+    await this.Filerepository.save(files);
+    return createResult({code:HTTP_STATUS_CODE_ENUM.OK});
+  }
+
+  async excelUserList(){
+    const Data = await this.Filerepository.find();
+    if(Data.length>0){
+      return createResult(Data);
+  }else{
+    return;
+  }
   }
 }

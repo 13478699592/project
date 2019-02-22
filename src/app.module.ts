@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UserEntity, UserListEntity } from './entities';
+import { UserEntity, UserListEntity, FileEntity } from './entities';
 import { DatabaseModule } from './core/modules/database';
 import { DATABASE_CONFIG } from './configs/database.config';
 import { DesEcbService } from './core/services';
@@ -9,7 +9,8 @@ import { DmHttpModule } from './scm/dm_http.module';
 
 const systemEntities = [
   UserEntity,
-  UserListEntity
+  UserListEntity,
+  FileEntity
 ];
 const entities = [...systemEntities]
 const modules=[

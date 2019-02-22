@@ -5,11 +5,12 @@ import { DmHttpService } from './dm_http.service';
 import { createWriteStream } from 'fs';
 import { join } from 'path';
 import { IFile } from '../core/shared/interfaces';
+import { FileEntity } from 'src/entities';
 
 @Controller()
 export class DmHttpController {
   constructor(
-    private readonly dmhttpService: DmHttpService
+    private readonly dmhttpService: DmHttpService,
   ) {}
 
   @Post("form/adduser")
@@ -46,5 +47,12 @@ export class DmHttpController {
     @UploadedFile() file: IFile,
   ) {
     console.log(file);
+    const data = this.dmhttpService.userlist_import(file);
+  }
+
+  @Post("form/excelUserList")
+  async excelUserList(
+  ) {
+    return this.dmhttpService.excelUserList();
   }
 }
